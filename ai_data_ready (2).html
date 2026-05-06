@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Is My Data AI-Ready? — Assessment Suite</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --navy: #0D1B3E;
+  --teal: #0A7EA4;
+  --gold: #E8A820;
+  --white: #FFFFFF;
+  --off-white: #F7F8FA;
+  --light-gray: #EEF0F4;
+  --mid-gray: #8A9BB0;
+  --dark: #1C2B3A;
+  --red: #E24B4A;
+  --amber: #EF9F27;
+  --yellow: #BA7517;
+  --lime: #639922;
+  --green: #1D9E75;
+  --red-bg: #FCEBEB;
+  --amber-bg: #FAEEDA;
+  --green-bg: #E1F5EE;
+  --blue-bg: #E6F1FB;
+  --purple-bg: #EEEDFE;
+  --pink-bg: #FBEAF0;
+  --coral-bg: #FAECE7;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--off-white);
+  color: var(--dark);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.site-header {
+  background: var(--navy);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid var(--gold);
+}
+.site-logo {
+  font-family: 'DM Serif Display', serif;
+  color: var(--white);
+  font-size: 20px;
+  letter-spacing: -0.3px;
+}
+.site-logo span { color: var(--gold); }
+.header-badge {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--mid-gray);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── NAV TABS ── */
+.nav-tabs {
+  background: var(--navy);
+  padding: 0 32px;
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.nav-tab {
+  padding: 14px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--mid-gray);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+.nav-tab:hover { color: var(--white); }
+.nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── MAIN ── */
+.main { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── HERO SECTION ── */
+.hero {
+  background: var(--navy);
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(10,126,164,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(232,168,32,0.3);
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 34px;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.hero h1 em { color: var(--gold); font-style: italic; }
+.hero p {
+  font-size: 15px;
+  color: var(--mid-gray);
+  line-height: 1.7;
+  max-width: 520px;
+}
+.hero-tools {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.hero-tool-pill {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.07);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.12);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.hero-tool-pill:hover, .hero-tool-pill.active-pill {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid #E2E6EC;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+}
+.cat-circle {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600;
+  flex-shrink: 0;
+  color: var(--white);
+}
+.cat-name { font-size: 14px; font-weight: 600; flex: 1; }
+.cat-iso { font-size: 10px; font-weight: 400; opacity: 0.65; display: block; margin-top: 1px; }
+.cat-avg { font-size: 13px; font-weight: 600; }
+
+.score-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 18px;
+  border-top: 1px solid #F0F2F5;
+}
+.score-label { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+.score-desc { font-size: 11px; color: var(--mid-gray); line-height: 1.4; }
+.rating-btns { display: flex; gap: 4px; flex-shrink: 0; }
+.r-btn {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 1px solid #E2E6EC;
+  background: var(--off-white);
+  font-size: 12px; font-weight: 600;
+  cursor: pointer;
+  color: var(--mid-gray);
+  transition: all 0.12s;
+  display: flex; align-items: center; justify-content: center;
+}
+.r-btn:hover { transform: translateY(-1px); border-color: #B0BAC8; }
+.r-btn.s1 { background: #FCEBEB; border-color: #E24B4A; color: #791F1F; }
+.r-btn.s2 { background: #FAEEDA; border-color: #EF9F27; color: #633806; }
+.r-btn.s3 { background: #FAC775; border-color: #BA7517; color: #412402; }
+.r-btn.s4 { background: #EAF3DE; border-color: #639922; color: #27500A; }
+.r-btn.s5 { background: #E1F5EE; border-color: #1D9E75; color: #085041; }
+
+.action-panel {
+  display: none;
+  padding: 14px 18px 16px;
+  background: #F7F8FA;
+  border-top: 1px solid #E8EDF2;
+}
+.action-panel.open { display: block; }
+.action-panel-title {
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--mid-gray);
+  margin-bottom: 10px;
+}
+.action-step {
+  display: flex; gap: 10px;
+  margin-bottom: 8px;
+  padding: 9px 12px;
+  background: var(--white);
+  border-radius: 8px;
+  border: 1px solid #E8EDF2;
+}
+.step-num {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700;
+  flex-shrink: 0; margin-top: 1px;
+  color: var(--white);
+}
+.step-body { flex: 1; }
+.step-text { font-size: 12px; line-height: 1.5; color: var(--dark); }
+.step-meta { margin-top: 4px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.step-time { font-size: 10px; color: var(--mid-gray); }
+.iso-chip {
+  font-size: 9px; font-weight: 600;
+  padding: 2px 6px; border-radius: 6px;
+  background: var(--blue-bg); color: #0C447C;
+  letter-spacing: 0.03em;
+}
+
+/* ── SUMMARY / RESULTS ── */
+.summary-card {
+  background: var(--navy);
+  border-radius: 16px;
+  padding: 28px;
+  margin-top: 20px;
+  color: var(--white);
+}
+.summary-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: var(--white);
+}
+.summary-title span { color: var(--gold); }
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.metric-tile {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+}
+.metric-val { font-size: 24px; font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 5px; }
+.metric-lbl { font-size: 11px; color: var(--mid-gray); }
+.bars-section { margin-bottom: 20px; }
+.bars-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--mid-gray); margin-bottom: 12px; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+.bar-lbl { font-size: 11px; color: rgba(255,255,255,0.7); width: 130px; flex-shrink: 0; }
+.bar-track { flex: 1; background: rgba(255,255,255,0.08); border-radius: 4px; height: 7px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+.bar-num { font-size: 11px; font-weight: 600; width: 28px; text-align: right; color: var(--gold); }
+.priority-section { margin-bottom: 18px; }
+.priority-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--mid-gray); margin-bottom: 10px; }
+.priority-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  margin-bottom: 6px;
+}
+.p-badge {
+  font-size: 9px; font-weight: 700;
+  padding: 3px 8px; border-radius: 10px;
+  white-space: nowrap; flex-shrink: 0;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-top: 1px;
+}
+.p-text { font-size: 12px; color: rgba(255,255,255,0.85); line-height: 1.5; }
+.p-sub { font-size: 11px; color: var(--mid-gray); margin-top: 2px; }
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-primary {
+  padding: 11px 22px;
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  border-radius: 8px;
+  font-size: 13px; font-weight: 700;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.btn-primary:hover { background: #d4961c; }
+.btn-secondary {
+  padding: 11px 22px;
+  background: rgba(255,255,255,0.07);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.12); }
+
+/* ── LEGEND ── */
+.legend {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  background: var(--white);
+  border-radius: 10px;
+  border: 1px solid #E2E6EC;
+  align-items: center;
+}
+.legend-hd { font-size: 11px; font-weight: 600; color: var(--mid-gray); margin-right: 4px; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--mid-gray); }
+.l-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+/* ── QUIZ ── */
+.quiz-intro {
+  background: var(--navy);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 20px;
+}
+.quiz-intro h2 { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--white); margin-bottom: 8px; }
+.quiz-intro p { font-size: 13px; color: var(--mid-gray); line-height: 1.6; }
+.q-card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid #E2E6EC;
+  padding: 18px 20px;
+  margin-bottom: 10px;
+  transition: border-color 0.15s;
+}
+.q-card:hover { border-color: #B0BAC8; }
+.q-cat-tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  padding: 3px 9px; border-radius: 10px;
+  margin-bottom: 8px;
+}
+.q-num { font-size: 10px; font-weight: 500; color: var(--mid-gray); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+.q-text { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 6px; line-height: 1.4; }
+.q-why { font-size: 11px; color: var(--mid-gray); line-height: 1.5; margin-bottom: 12px; font-style: italic; }
+.ans-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.ans-btn {
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid #E2E6EC;
+  background: var(--off-white);
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--dark);
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.4;
+  transition: all 0.12s;
+}
+.ans-btn:hover { border-color: #B0BAC8; background: var(--white); }
+.ans-btn.sel3 { background: #E1F5EE; border-color: #1D9E75; color: #085041; }
+.ans-btn.sel2 { background: #EAF3DE; border-color: #639922; color: #27500A; }
+.ans-btn.sel1 { background: #FAEEDA; border-color: #EF9F27; color: #633806; }
+.ans-btn.sel0 { background: #FCEBEB; border-color: #E24B4A; color: #791F1F; }
+
+.progress-bar-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.prog-track { flex: 1; background: #E2E6EC; border-radius: 4px; height: 5px; overflow: hidden; }
+.prog-fill { height: 100%; background: var(--teal); border-radius: 4px; transition: width 0.3s; }
+.prog-label { font-size: 12px; color: var(--mid-gray); white-space: nowrap; }
+
+/* ── QUIZ RESULT ── */
+.quiz-result {
+  border-radius: 16px;
+  padding: 28px;
+  margin-top: 20px;
+  display: none;
+}
+.quiz-result.show { display: block; }
+.qr-emoji { font-size: 40px; margin-bottom: 10px; }
+.qr-title { font-family: 'DM Serif Display', serif; font-size: 26px; margin-bottom: 8px; }
+.qr-sub { font-size: 13px; line-height: 1.7; margin-bottom: 18px; opacity: 0.85; }
+.qr-bars { margin-bottom: 16px; }
+.qr-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.qr-bar-lbl { font-size: 11px; width: 160px; flex-shrink: 0; opacity: 0.8; }
+.qr-bar-track { flex: 1; background: rgba(0,0,0,0.1); border-radius: 4px; height: 8px; overflow: hidden; }
+.qr-bar-fill { height: 100%; border-radius: 4px; }
+.qr-bar-pct { font-size: 11px; font-weight: 600; width: 32px; text-align: right; }
+.qr-tips { margin-bottom: 16px; }
+.qr-tip {
+  display: flex; gap: 10px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.qr-tip-text { font-size: 12px; line-height: 1.5; }
+.qr-btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.qr-btn-primary {
+  padding: 10px 20px;
+  background: var(--navy);
+  color: var(--white);
+  border: none; border-radius: 8px;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.qr-btn-primary:hover { background: #0D2550; }
+.qr-btn-secondary {
+  padding: 10px 20px;
+  background: rgba(0,0,0,0.12);
+  color: inherit;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 8px;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+}
+
+/* ── PLAN TAB ── */
+.plan-section { margin-bottom: 28px; }
+.plan-phase {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px;
+}
+.phase-badge {
+  font-size: 11px; font-weight: 700;
+  padding: 5px 14px; border-radius: 20px;
+  white-space: nowrap;
+}
+.phase-line { flex: 1; height: 1px; background: #E2E6EC; }
+.plan-item {
+  display: flex; gap: 12px;
+  padding: 14px 16px;
+  background: var(--white);
+  border-radius: 10px;
+  border: 1px solid #E2E6EC;
+  margin-bottom: 8px;
+}
+.plan-num {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--navy); color: var(--gold);
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.plan-content { flex: 1; }
+.plan-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; color: var(--dark); }
+.plan-desc { font-size: 12px; color: var(--mid-gray); line-height: 1.5; }
+.plan-meta { margin-top: 5px; display: flex; gap: 6px; flex-wrap: wrap; }
+.plan-iso { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 6px; background: var(--blue-bg); color: #0C447C; }
+.plan-time { font-size: 10px; color: var(--mid-gray); }
+
+/* ── ORG INPUT ── */
+.input-row { display: flex; gap: 10px; align-items: center; margin-bottom: 18px; flex-wrap: wrap; }
+.input-row label { font-size: 12px; color: var(--mid-gray); white-space: nowrap; }
+.input-row input {
+  padding: 8px 12px; border-radius: 8px;
+  border: 1px solid #E2E6EC;
+  font-size: 13px; font-family: 'DM Sans', sans-serif;
+  background: var(--white); color: var(--dark);
+  outline: none;
+}
+.input-row input:focus { border-color: var(--teal); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .main { padding: 20px 16px 60px; }
+  .hero { padding: 24px 20px; }
+  .hero h1 { font-size: 26px; }
+  .metrics-row { grid-template-columns: 1fr 1fr; }
+  .ans-grid { grid-template-columns: 1fr; }
+  .nav-tabs { padding: 0 16px; overflow-x: auto; }
+  .site-header { padding: 0 16px; }
+}
+
+.help-btn { background: none; border: none; cursor: pointer; padding: 0; margin-left: 6px; vertical-align: middle; font-size: 13px; color: #8A9BB0; line-height: 1; display: inline-flex; align-items: center; gap: 3px; font-family: 'DM Sans', sans-serif; transition: color 0.15s; }
+.help-btn:hover { color: #0A7EA4; }
+.help-btn svg { flex-shrink: 0; }
+.help-drawer { display: none; margin: 0 18px 14px; padding: 14px 16px; background: #F0F6FB; border-radius: 10px; border: 1px solid #C5DCF0; border-left: 3px solid #0A7EA4; }
+.help-drawer.open { display: block; }
+.help-drawer-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #0A7EA4; margin-bottom: 8px; }
+.help-section { margin-bottom: 10px; }
+.help-section-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #8A9BB0; margin-bottom: 4px; }
+.help-section-text { font-size: 12px; color: #1C2B3A; line-height: 1.6; }
+.help-example { background: #FFF3CD; border: 1px solid #F0C040; border-radius: 6px; padding: 8px 10px; font-size: 11px; color: #633806; line-height: 1.5; margin-top: 4px; }
+.help-example::before { content: 'Real-world example: '; font-weight: 700; }
+.help-iso { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 6px; background: #E6F1FB; color: #0C447C; margin-top: 6px; }
+.sc-help-drawer { display: none; margin: 0 18px 12px; padding: 13px 15px; background: #F0F6FB; border-radius: 10px; border: 1px solid #C5DCF0; border-left: 3px solid #0A7EA4; }
+.sc-help-drawer.open { display: block; }
+</style>
+</head>
+<body>
+
+<!-- DISCLAIMER BANNER -->
+<div id="disclaimer-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(13,27,62,0.97);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px">
+  <div style="max-width:560px;background:#fff;border-radius:16px;padding:36px;font-family:'DM Sans',sans-serif">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#E8A820;margin-bottom:12px">Important — please read before continuing</div><div style="font-size:12px;color:#4A5568;margin-bottom:10px">Tool created by <strong style="color:#0D1B3E">Jeff Laber</strong> — Helping enterprises get AI-ready</div>
+    <div style="font-size:20px;font-weight:700;color:#0D1B3E;margin-bottom:14px;line-height:1.3;font-family:'DM Serif Display',serif">This is an educational tool, not professional advice</div>
+    <div style="font-size:13px;color:#4A5568;line-height:1.7;margin-bottom:16px">
+      <p style="margin-bottom:10px">This tool is provided <strong>for informational and educational purposes only</strong>. It is designed to help teams think about data readiness in the context of AI — it is <strong>not</strong> a formal audit, legal assessment, compliance review, or professional advisory service.</p>
+      <p style="margin-bottom:10px">Results and action steps are <strong>general guidance only</strong>. They are loosely inspired by ISO/IEC 42001:2023 principles but do not constitute official ISO certification, compliance verification, or legal advice. This tool has no formal affiliation with ISO or any standards body.</p>
+      <p style="margin-bottom:10px">Your organisation's specific data, regulatory environment, industry, and risk profile may require different or additional steps beyond what this tool suggests. <strong>Always consult qualified legal, compliance, and data governance professionals</strong> before making significant decisions about AI deployment or data governance.</p>
+      <p style="margin-bottom:0">By continuing, you acknowledge that you use this tool at your own discretion and that the creator accepts no liability for decisions made based on its output.</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:12px;background:#F7F8FA;border-radius:8px;border:1px solid #E2E6EC">
+      <input type="checkbox" id="disclaimer-check" style="width:18px;height:18px;cursor:pointer;flex-shrink:0">
+      <label for="disclaimer-check" style="font-size:12px;color:#0D1B3E;font-weight:500;cursor:pointer;line-height:1.4">I understand this is an educational tool and not professional advice. I will seek qualified professional guidance for formal compliance decisions.</label>
+    </div>
+    <button onclick="acceptDisclaimer()" style="width:100%;padding:13px;background:#0D1B3E;color:#E8A820;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:0.02em" id="disclaimer-btn">Continue to tool</button>
+    <div style="font-size:10px;color:#8A9BB0;text-align:center;margin-top:12px">This notice appears each time the tool is opened</div>
+  </div>
+</div>
+
+<script>
+function acceptDisclaimer() {
+  if (!document.getElementById('disclaimer-check').checked) {
+    document.getElementById('disclaimer-check').style.outline = '2px solid #E24B4A';
+    document.getElementById('disclaimer-check').parentElement.style.borderColor = '#E24B4A';
+    return;
+  }
+  document.getElementById('disclaimer-overlay').style.display = 'none';
+}
+</script>
+
+
+<header class="site-header">
+  <div class="site-logo">Data<span>Ready</span>.ai</div><div style="font-size:11px;color:#8A9BB0;margin-left:12px;padding-left:12px;border-left:1px solid rgba(255,255,255,0.12);line-height:1.3">Created by <strong style="color:#E8A820">Jeff Laber</strong><br><span style="font-weight:300">Helping enterprises get AI-ready</span></div>
+  <div class="header-badge">ISO 42001 Aligned</div>
+</header>
+
+<nav class="nav-tabs">
+  <button class="nav-tab active" onclick="switchView('home',this)">Home</button>
+  <button class="nav-tab" onclick="switchView('quiz',this)">Quick Quiz</button>
+  <button class="nav-tab" onclick="switchView('scorecard',this)">Full Scorecard</button>
+  <button class="nav-tab" onclick="switchView('plan',this)">90-Day Plan</button>
+</nav>
+
+<main class="main">
+
+<!-- ══════════════════ HOME ══════════════════ -->
+<div id="view-home" class="view active">
+  <div class="hero">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div class="hero-tag" style="margin-bottom:0">AI Governance Tool</div><div style="font-size:11px;color:#8A9BB0">by <span style="color:#E8A820;font-weight:600">Jeff Laber</span></div></div>
+    <h1>Is your data ready<br>for <em>AI?</em></h1>
+    <p>Three tools in one. Start with the quick quiz for a 3-minute gut-check, go deeper with the full scorecard, then get a personalised 90-day action plan — all loosely based on ISO 42001 data controls.</p>
+    <div class="hero-tools">
+      <button class="hero-tool-pill" onclick="switchView('quiz', document.querySelectorAll('.nav-tab')[1])">Quick Quiz — 3 min</button>
+      <button class="hero-tool-pill" onclick="switchView('scorecard', document.querySelectorAll('.nav-tab')[2])">Full Scorecard — 10 min</button>
+      <button class="hero-tool-pill" onclick="switchView('plan', document.querySelectorAll('.nav-tab')[3])">90-Day Plan</button>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:4px">
+    <div class="card" style="padding:20px">
+      <div style="font-size:28px;margin-bottom:8px">📋</div>
+      <div style="font-size:14px;font-weight:600;margin-bottom:5px">Quick Quiz</div>
+      <div style="font-size:12px;color:var(--mid-gray);line-height:1.5">12 plain-English questions. No jargon. Perfect for sharing with colleagues who aren't technical.</div>
+    </div>
+    <div class="card" style="padding:20px">
+      <div style="font-size:28px;margin-bottom:8px">📊</div>
+      <div style="font-size:14px;font-weight:600;margin-bottom:5px">Full Scorecard</div>
+      <div style="font-size:12px;color:var(--mid-gray);line-height:1.5">18 items across 6 data domains. Score each area and get instant action steps mapped to ISO 42001.</div>
+    </div>
+    <div class="card" style="padding:20px">
+      <div style="font-size:28px;margin-bottom:8px">🗓️</div>
+      <div style="font-size:14px;font-weight:600;margin-bottom:5px">90-Day Plan</div>
+      <div style="font-size:12px;color:var(--mid-gray);line-height:1.5">A practical, non-technical action plan built from your scores. Week-by-week steps your team can actually follow.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ QUIZ ══════════════════ -->
+<div id="view-quiz" class="view">
+  <div class="quiz-intro">
+    <h2>Quick data readiness check</h2>
+    <p>12 plain-English questions. No technical knowledge needed. Takes about 3 minutes. Answer honestly — the more accurate your answers, the more useful your results.</p>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="prog-track"><div class="prog-fill" id="q-prog" style="width:0%"></div></div>
+    <span class="prog-label" id="q-prog-label">0 of 12</span>
+  </div>
+  <div id="quiz-questions"></div>
+  <div class="quiz-result" id="quiz-result">
+    <div class="qr-emoji" id="qr-emoji"></div>
+    <div class="qr-title" id="qr-title"></div>
+    <div class="qr-sub" id="qr-sub"></div>
+    <div class="qr-bars" id="qr-bars"></div>
+    <div class="qr-tips" id="qr-tips"></div>
+    <div class="qr-btn-row">
+      <button class="qr-btn-primary" onclick="switchView('scorecard', document.querySelectorAll('.nav-tab')[2])">Go deeper — full scorecard</button>
+      <button class="qr-btn-secondary" onclick="resetQuiz()">Start over</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ SCORECARD ══════════════════ -->
+<div id="view-scorecard" class="view">
+  <div class="input-row">
+    <label>Name / team</label>
+    <input type="text" id="sc-name" placeholder="e.g. Jeff — Sales Ops">
+    <label>Date</label>
+    <input type="text" id="sc-date" placeholder="May 2026" style="max-width:110px">
+  </div>
+  <div class="legend">
+    <span class="legend-hd">Rating:</span>
+    <div class="legend-item"><div class="l-dot" style="background:#E24B4A"></div>1 = Doesn't exist</div>
+    <div class="legend-item"><div class="l-dot" style="background:#EF9F27"></div>2 = Sometimes / informal</div>
+    <div class="legend-item"><div class="l-dot" style="background:#BA7517"></div>3 = Partially in place</div>
+    <div class="legend-item"><div class="l-dot" style="background:#639922"></div>4 = Mostly done</div>
+    <div class="legend-item"><div class="l-dot" style="background:#1D9E75"></div>5 = Fully evidenced</div>
+  </div>
+  <div id="sc-blocks"></div>
+  <div class="summary-card">
+    <div class="summary-title">Your results <span id="sc-name-display"></span></div>
+    <div class="metrics-row">
+      <div class="metric-tile"><div class="metric-val" id="sc-overall">—</div><div class="metric-lbl">Overall score</div></div>
+      <div class="metric-tile"><div class="metric-val" id="sc-scored">0/18</div><div class="metric-lbl">Items rated</div></div>
+      <div class="metric-tile"><div class="metric-val" id="sc-maturity">—</div><div class="metric-lbl">Maturity level</div></div>
+    </div>
+    <div class="bars-section">
+      <div class="bars-title">Score by domain</div>
+      <div id="sc-bars"></div>
+    </div>
+    <div class="priority-section">
+      <div class="priority-title">Priority gaps</div>
+      <div id="sc-priorities"><div style="font-size:12px;color:var(--mid-gray)">Rate items above to see your priorities</div></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="buildPlan()">Build my 90-day plan</button>
+      <button class="btn-secondary" onclick="resetScorecard()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ PLAN ══════════════════ -->
+<div id="view-plan" class="view">
+  <div class="hero" style="margin-bottom:24px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div class="hero-tag" style="margin-bottom:0">Action Plan</div><div style="font-size:11px;color:#8A9BB0">by <span style="color:#E8A820;font-weight:600">Jeff Laber</span></div></div>
+    <h1 style="font-size:28px">Your 90-day<br><em>data readiness plan</em></h1>
+    <p id="plan-intro-text" style="margin-top:8px">Complete the scorecard first to get a plan personalised to your scores. Or browse the generic plan below to see what good looks like.</p>
+  </div>
+  <div id="plan-content"></div>
+</div>
+
+</main>
+
+<script>
+// ═══════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════
+
+const QUIZ_QS = [
+  {id:"q1",cat:"Do you know your data?",catColor:"#185FA5",catBg:"#E6F1FB",
+   text:"If someone asked you right now — 'what data does your AI learn from?' — how confident are you?",
+   why:"AI learns from data the way people learn from experience. If you don't know what experience it's had, you can't predict how it'll behave.",
+   answers:[{t:"Very confident — it's documented",s:3},{t:"Mostly — I think I know, not written down",s:2},{t:"Vaguely — different people would say different things",s:1},{t:"Honestly, no idea",s:0}]},
+  {id:"q2",cat:"Do you know your data?",catColor:"#185FA5",catBg:"#E6F1FB",
+   text:"Can you trace where your data originally came from — who collected it, when, and why?",
+   why:"If a regulator asks 'where did this data come from?' you need a paper trail. Without it, you can't prove the AI is trustworthy.",
+   answers:[{t:"Yes — every source is documented",s:3},{t:"For most sources, yes",s:2},{t:"Roughly, but not formally tracked",s:1},{t:"No — it kind of just accumulated",s:0}]},
+  {id:"q3",cat:"Is your data clean?",catColor:"#534AB7",catBg:"#EEEDFE",
+   text:"How often do you find missing, wrong, or duplicate information in your data?",
+   why:"Garbage in, garbage out. An AI trained on messy data learns the mess — and repeats it at scale.",
+   answers:[{t:"Rarely — automated checks catch issues",s:3},{t:"Sometimes — we catch most things manually",s:2},{t:"Often — a known problem we haven't solved",s:1},{t:"Constantly — data quality is a daily headache",s:0}]},
+  {id:"q4",cat:"Is your data clean?",catColor:"#534AB7",catBg:"#EEEDFE",
+   text:"Is your data up to date? Would AI trained on it today still reflect reality in 6 months?",
+   why:"Stale data produces stale AI. A model trained on 2022 behaviour may give completely wrong answers in 2026.",
+   answers:[{t:"Yes — clear refresh schedule and it's followed",s:3},{t:"Mostly — some datasets lag behind",s:2},{t:"Uncertain — we don't track data freshness",s:1},{t:"No — a lot of our data is quite old",s:0}]},
+  {id:"q5",cat:"Is it fair?",catColor:"#0F6E56",catBg:"#E1F5EE",
+   text:"Does your data reflect the full range of people or situations your AI will be used on?",
+   why:"If your training data under-represents certain groups, the AI will perform worse for them — often invisibly.",
+   answers:[{t:"Yes — we've verified it covers our full user base",s:3},{t:"Probably — but not formally verified",s:2},{t:"Unlikely — our data skews toward certain groups",s:1},{t:"Definitely not — we know there are big gaps",s:0}]},
+  {id:"q6",cat:"Is it fair?",catColor:"#0F6E56",catBg:"#E1F5EE",
+   text:"Could your data contain historical biases — past decisions that discriminated against certain groups?",
+   why:"AI learns patterns from history. If history was unfair, AI will repeat that unfairness — automatically and at scale.",
+   answers:[{t:"We've checked and actively removed biased patterns",s:3},{t:"Aware of the risk, partially addressed it",s:2},{t:"Possibly — we haven't looked closely",s:1},{t:"Almost certainly — our history has known fairness issues",s:0}]},
+  {id:"q7",cat:"Is it private and legal?",catColor:"#993556",catBg:"#FBEAF0",
+   text:"Does your data contain personal information like names, health records, or financial details?",
+   why:"Personal data in AI training is heavily regulated. Using it incorrectly exposes your organisation to significant legal risk.",
+   answers:[{t:"Yes, properly anonymised with legal sign-off",s:3},{t:"Yes — we're working on the privacy requirements",s:2},{t:"Probably — we haven't done a full audit",s:1},{t:"Yes and we haven't addressed the privacy implications",s:0}]},
+  {id:"q8",cat:"Is it private and legal?",catColor:"#993556",catBg:"#FBEAF0",
+   text:"Do you have clear legal permission to use this data to train an AI?",
+   why:"Using data for AI training often requires different consent than collecting it. Many organisations don't have the rights they assumed.",
+   answers:[{t:"Yes — legal has reviewed and signed off",s:3},{t:"We believe so — not formally confirmed",s:2},{t:"Unclear — we need to check",s:1},{t:"No — we haven't looked into this",s:0}]},
+  {id:"q9",cat:"Can you manage it?",catColor:"#854F0B",catBg:"#FAEEDA",
+   text:"Is there a named person responsible for the quality and accuracy of your data?",
+   why:"Data without an owner is nobody's problem — until something goes wrong. Then it's everyone's crisis.",
+   answers:[{t:"Yes — clear ownership with accountability",s:3},{t:"Sort of — shared across a team",s:2},{t:"Not really — falls between departments",s:1},{t:"No — nobody owns it",s:0}]},
+  {id:"q10",cat:"Can you manage it?",catColor:"#854F0B",catBg:"#FAEEDA",
+   text:"If the AI makes a bad decision based on bad data, could you trace exactly which data caused it?",
+   why:"When AI goes wrong — and it will — you need to find the cause fast. Without traceability, you're flying blind.",
+   answers:[{t:"Yes — full audit trails and version history",s:3},{t:"Probably — for most systems",s:2},{t:"Difficult — would take significant effort",s:1},{t:"No — once in the system, can't trace it back",s:0}]},
+  {id:"q11",cat:"Is it enough?",catColor:"#993C1D",catBg:"#FAECE7",
+   text:"Do you have enough data — volume and variety — to teach an AI to make good decisions?",
+   why:"AI needs enough examples to learn patterns. Too little and it guesses. Too narrow and it misses the real world.",
+   answers:[{t:"Yes — substantial volume across diverse scenarios",s:3},{t:"Probably enough for a first version",s:2},{t:"Thin in some important areas",s:1},{t:"No — we really don't have much to work with",s:0}]},
+  {id:"q12",cat:"Is it enough?",catColor:"#993C1D",catBg:"#FAECE7",
+   text:"How would you honestly rate your organisation's overall confidence that your data is ready for AI?",
+   why:"Your gut often knows before the audit does.",
+   answers:[{t:"Very confident — we've done the work",s:3},{t:"Cautiously optimistic — mostly ready",s:2},{t:"Nervous — real gaps we haven't fixed",s:1},{t:"Not at all — a lot of work to do",s:0}]}
+];
+
+
+const QUIZ_HELP = {
+  q1: {
+    concept: "An AI system learns entirely from the data it is trained on. If you cannot clearly describe what that data is, you have no basis for understanding what the AI has learned — or predicting how it will behave in the real world.",
+    whyAsked: "Auditors and regulators will ask this question immediately. If different people in your organisation give different answers about what data the AI uses, that is a governance failure — not a data failure.",
+    example: "A bank deploys an AI to assess loan applications. Six months later, a regulator asks what data it was trained on. Three different people give three different answers. The regulator treats this as evidence of poor AI governance and opens an investigation.",
+    iso: "ISO 42001 A.7.2 — Data management processes"
+  },
+  q2: {
+    concept: "Data provenance means knowing the complete history of your data — who collected it, when, why, from whom, and under what conditions. Without provenance, you cannot verify that the data was collected legally, ethically, or accurately.",
+    whyAsked: "If an AI system is ever challenged — by a regulator, a court, or an affected person — you will need to prove where the data came from. 'We don't know' is not an acceptable answer.",
+    example: "A healthcare AI is found to have been trained partly on patient data from a hospital that was acquired in a merger. Nobody documented that this data came from a different legal entity with different consent terms. The AI cannot be deployed in the EU as a result.",
+    iso: "ISO 42001 A.7.3 — Data acquisition"
+  },
+  q3: {
+    concept: "Data quality refers to how complete, accurate, consistent, and reliable your data is. AI systems learn patterns from data — if the data contains errors, gaps, or inconsistencies, the AI will learn those patterns and repeat them at scale.",
+    whyAsked: "Poor data quality is the single most common reason AI systems underperform in production. It is also one of the easiest things to assess and fix before building an AI, but frequently ignored because teams focus on the model rather than the fuel.",
+    example: "A retailer trains an AI to predict inventory needs. 15% of historical sales records have missing store codes. The AI learns to ignore a category of stores entirely, causing chronic stockouts in those locations that cost millions before the root cause is identified.",
+    iso: "ISO 42001 A.7.4 — Data quality"
+  },
+  q4: {
+    concept: "Data freshness refers to how recently your data was collected and whether it still accurately reflects the current state of the world. AI models trained on old data develop a fixed picture of reality that drifts further from truth over time.",
+    whyAsked: "This is called model drift — the phenomenon where an AI that performed well at launch gradually degrades because the world has changed but the model has not. It is silent and dangerous because the AI keeps producing confident answers that are increasingly wrong.",
+    example: "A fraud detection model was trained in 2022 using pre-pandemic transaction patterns. By 2024, spending behaviours had fundamentally changed. The model began flagging legitimate transactions as fraud and missing new fraud patterns it had never seen, causing both customer complaints and undetected losses.",
+    iso: "ISO 42001 A.6.2.6 — AI system operation and monitoring"
+  },
+  q5: {
+    concept: "Representativeness means your training data covers the full range of people, situations, and scenarios your AI will encounter in the real world. If certain groups are absent or under-represented in the data, the AI will perform worse for those groups.",
+    whyAsked: "AI systems do not fail equally. They typically fail most for the groups least represented in training data — often the groups who can least afford a bad outcome. This creates both ethical harm and significant legal risk under discrimination laws.",
+    example: "A facial recognition system trained primarily on images of light-skinned individuals achieves 99% accuracy for that group but only 65% for darker-skinned individuals. When deployed in airport security, it disproportionately flags and detains certain passenger groups, creating discrimination claims.",
+    iso: "ISO 42001 A.5.4 — Impacts on individuals and groups"
+  },
+  q6: {
+    concept: "Historical bias means that data collected in the past reflects the biases, inequalities, and discriminatory practices of the past. When AI learns from this data, it learns those biases too — and then applies them automatically, at scale, going forward.",
+    whyAsked: "This is one of the most serious and least visible risks in AI. The AI is not doing anything wrong by the numbers — it is accurately learning from history. But if history was unfair, the AI faithfully reproduces that unfairness as if it were objective truth.",
+    example: "A hiring AI is trained on 10 years of successful hire data from a company that historically hired mainly men for senior roles. The AI learns that being male correlates with success and begins downranking female candidates. The company faces an employment discrimination case.",
+    iso: "ISO 42001 A.5.4 — Impacts on individuals and groups"
+  },
+  q7: {
+    concept: "Personal data — any information that can identify a living individual — is subject to strict legal protections in most jurisdictions. Using personal data to train AI requires a specific legal basis, and that basis is often different from the original reason the data was collected.",
+    whyAsked: "Many organisations assume that because they collected data lawfully, they can use it for any purpose. This is incorrect. Using customer service records to train an AI is a different processing purpose than storing them for customer support, and often requires separate legal justification.",
+    example: "A telecom company uses 3 years of customer call transcripts to train an AI assistant. Customers consented to their calls being recorded for quality assurance — not for AI training. The company is fined €2.3 million under GDPR for processing personal data beyond its stated purpose.",
+    iso: "ISO 42001 A.7.3 — Data acquisition and legal basis"
+  },
+  q8: {
+    concept: "Legal permission for AI training is a specific and often overlooked requirement. Even if you own the data, collected it yourself, or purchased it legitimately, using it to train AI may require additional consent, licensing, or legal justification that you do not currently have.",
+    whyAsked: "This catches many organisations off guard. Purchased datasets, web-scraped content, and employee data are common sources of AI training data where organisations assume they have rights they do not actually have. Getting legal clarity before building is far cheaper than after.",
+    example: "A market research firm trains an AI on survey responses it collected over 10 years. The survey consent forms said data would be used for 'market research and reporting' — not AI training. Legal determines that consent must be re-obtained from respondents. 40% of the training data must be discarded.",
+    iso: "ISO 42001 A.7.3 — Data acquisition"
+  },
+  q9: {
+    concept: "Data ownership means that a specific named individual is accountable for the accuracy, quality, security, and appropriate use of a dataset. Without clear ownership, data quality problems have no natural owner, privacy issues go unresolved, and governance decisions fall into a gap between teams.",
+    whyAsked: "In AI audits, one of the first questions asked is 'who is responsible for this data?' When the answer is 'the data team' or 'IT' or 'everyone', that means no one. Accountability requires a name, not a department.",
+    example: "A customer database used to train an AI recommendation system has outdated records for 30% of customers — wrong addresses, closed accounts, discontinued products. When the problem surfaces, sales blames IT, IT blames data engineering, and data engineering says it was handed the data that way. Nobody fixes it for 8 months.",
+    iso: "ISO 42001 A.3.2 — AI roles and responsibilities"
+  },
+  q10: {
+    concept: "Data traceability means being able to reconstruct exactly what data was used to make a specific AI decision — which dataset, which version, which records. Without traceability, when the AI makes a wrong decision, you cannot diagnose the cause or defend the outcome.",
+    whyAsked: "Regulators increasingly require that organisations can explain AI decisions to affected individuals. If someone is denied a loan, a job, or insurance based on AI, and the organisation cannot show what data led to that decision, they face both legal exposure and reputational risk.",
+    example: "An insurance AI incorrectly assigns a customer to a high-risk category, resulting in a premium three times the correct amount. The customer challenges the decision. The insurer cannot identify which version of the model made the decision or what data it used. Legal settlement costs £180,000.",
+    iso: "ISO 42001 A.6.2.8 — Event logging"
+  },
+  q11: {
+    concept: "Volume and variety refer to whether you have enough data — in terms of quantity and diversity of scenarios — for an AI to learn reliable patterns. Too little data causes overfitting: the AI memorises the training examples rather than learning generalisable rules, and performs poorly on anything new.",
+    whyAsked: "Many AI projects fail not because of bad models but because of insufficient data. Teams often discover this after significant investment in model development, not before. Assessing data volume before starting saves enormous time and money.",
+    example: "A startup builds an AI to detect equipment faults in manufacturing. It has 500 historical examples of faults — but only 12 examples of the most common fault type. The AI performs well in testing on those 12 examples but fails completely in production because it has essentially memorised rather than learned.",
+    iso: "ISO 42001 A.7.2 — Data management processes"
+  },
+  q12: {
+    concept: "Honest self-assessment is a governance practice. Organisations that are overconfident about their AI readiness tend to skip foundational steps and discover problems in production — where the cost of fixing them is an order of magnitude higher. Calibrated uncertainty is a strength, not a weakness.",
+    whyAsked: "This question is a calibration check. Research consistently shows that organisations with lower data maturity tend to overestimate their readiness. If your gut says nervous, your data is probably telling you something your metrics haven't caught yet.",
+    example: "A retail chain's data team confidently assessed their data as 'AI-ready' and proceeded to model development. Six months into a £2M AI implementation, the external vendor discovered that 40% of the training data contained a systematic error introduced by a legacy system migration 3 years earlier. The project was delayed 9 months.",
+    iso: "ISO 42001 A.5.2 — AI system impact assessment process"
+  }
+};
+
+const SC_HELP = {
+  k1: { concept: "A data inventory is a structured list of every dataset your organisation uses or plans to use for AI. It records what the data is, where it lives, what it contains, who owns it, and when it was last updated.", whyAsked: "You cannot govern what you cannot see. Without an inventory, data assets accumulate invisibly, ownership is unclear, and compliance requirements are missed. An inventory is the foundation of every other data governance activity.", example: "A financial services firm discovers during an ISO audit that 14 datasets are being used across 6 AI systems. Three of them have no documented owner, two were sourced from a vendor whose contract has expired, and one contains PII that was never flagged to the privacy team.", iso: "ISO 42001 A.7.2" },
+  k2: { concept: "Data ownership assigns explicit accountability to a named individual for a specific dataset. The owner is responsible for its accuracy, appropriate use, access permissions, and compliance with relevant regulations.", whyAsked: "When data quality problems occur — and they will — someone needs to be responsible for fixing them. When a regulator asks who approved the use of a dataset for AI, there must be an answer. Ownership creates that accountability.", example: "During an AI system review, an auditor asks who approved the inclusion of a third-party dataset in the training pipeline. The data science team says the business team approved it. The business team says IT sourced it. IT says they were asked to pull the data but didn't approve its use. Nobody owns it.", iso: "ISO 42001 A.3.2" },
+  k3: { concept: "Data provenance is the documented history of where data came from — its original source, how it was collected, by whom, under what conditions, and what has been done to it since. It is the data equivalent of a chain of custody.", whyAsked: "Regulators, auditors, and affected individuals may all ask where AI training data originated. Without provenance documentation, you cannot answer that question — and the inability to answer is itself a compliance finding.", example: "A healthcare AI provider is asked by a regulatory body to demonstrate that patient data used in training was collected with appropriate consent. Without provenance records, the provider cannot distinguish which records came from which collection programmes, making compliance impossible to demonstrate.", iso: "ISO 42001 A.7.3" },
+  q1: { concept: "Data completeness measures the percentage of required fields that contain a value rather than being empty or null. AI systems treat missing values as signals — if 20% of a key field is blank, the AI learns from the pattern of missingness, which may not reflect reality.", whyAsked: "Incompleteness is the most common data quality issue and the easiest to overlook because it is invisible by default. Setting explicit completeness thresholds forces the question: how much missingness is acceptable for this use case?", example: "A churn prediction model is trained on customer data where the 'last contact date' field is blank for 25% of records. The model learns that customers without a contact date churn less — but the real reason is that those records are simply incomplete. The model's churn predictions for that segment are completely unreliable.", iso: "ISO 42001 A.7.4" },
+  q2: { concept: "Data accuracy measures how closely data values reflect real-world truth. Inaccurate data teaches the AI wrong lessons — it learns correlations that exist in the data but not in reality, producing recommendations and decisions that are systematically wrong.", whyAsked: "Accuracy is distinct from completeness. A field can be filled in but contain wrong information. Accuracy requires validation against a ground truth source — which means your organisation must define what that source is.", example: "A credit scoring AI is trained on income data self-reported by customers. Validation reveals that 18% of incomes are overstated by more than 30%. The AI learns to treat the overstated incomes as accurate and produces risk scores that are systematically optimistic for that segment.", iso: "ISO 42001 A.7.4" },
+  q3: { concept: "Data freshness refers to whether your data is current enough to accurately represent the present state of whatever it describes. Freshness requirements vary by use case — a real-time fraud detection system needs very fresh data, while a demographic analysis may tolerate older data.", whyAsked: "Stale data is invisible data quality failure. The data looks complete and accurate — it was complete and accurate — it is simply no longer true. Without defined freshness policies, teams do not know when data has become too old to trust.", example: "A logistics company's route optimisation AI was trained on road network data from 2021. A major road construction project completed in 2023 created new faster routes. The AI continues recommending the old routes, adding an average of 12 minutes per delivery — unnoticed for 8 months because no freshness policy triggered a review.", iso: "ISO 42001 A.7.4" },
+  l1: { concept: "Data lineage is the complete, documented path of data from its original source to its final use — every system it passed through, every transformation applied, every copy made. It makes data fully auditable and reproducible.", whyAsked: "If an AI makes a decision that is challenged, the first question is: what data led to that decision? Without lineage, you cannot answer. With lineage, you can trace any output back to its inputs and demonstrate exactly how the data was handled.", example: "An AI model produces an unexpectedly biased output during a fairness audit. With lineage documentation, the team traces the issue to a data join operation performed 4 steps upstream that inadvertently excluded records from certain postcodes. Without lineage, this would have taken weeks to find.", iso: "ISO 42001 A.7.5" },
+  l2: { concept: "Change history records every modification made to a dataset — what changed, why, by whom, and when. It is the undo history for your data, allowing you to understand why the current state differs from the original.", whyAsked: "Data is rarely used in its raw form. Cleaning, filtering, and transforming data introduces decisions that affect what the AI learns. Without change history, those decisions are invisible and unreviewable.", example: "A model underperforms on validation data. With change history, the team discovers that six months ago someone removed records flagged as 'outliers' from the training set — but those outliers were actually rare but valid edge cases the model now cannot handle.", iso: "ISO 42001 A.7.5" },
+  l3: { concept: "A transformation log documents every operation applied to raw data before it is used for AI training — filtering, normalisation, encoding, imputation, aggregation, and any other processing step. Each step is a decision that shapes what the AI learns.", whyAsked: "Data preparation is where many bias and quality issues are introduced, often unintentionally. A transformation log makes these decisions visible, reviewable, and reversible — turning an opaque process into an auditable one.", example: "During a bias audit, a team discovers the AI underperforms for customers over 65. The transformation log reveals that an engineer normalised age values by capping them at 60 during data preparation — removing meaningful variation for older customers. The decision was made quickly and never documented.", iso: "ISO 42001 A.7.5" },
+  pr1: { concept: "Personal data identification means systematically finding every piece of information in your datasets that could identify a living individual — directly (name, email, ID number) or indirectly (combination of age, postcode, and employer). This is the essential first step before any privacy compliance work.", whyAsked: "You cannot protect what you have not found. Many organisations have personal data in unexpected places — embedded in free-text fields, inferred from behavioural patterns, or present in datasets that were not originally designed to contain it.", example: "A retail AI team runs a data scan and discovers that customer purchase histories, combined with delivery postcodes and timestamps, can reliably identify individuals even after names and emails are removed. The combination creates a re-identification risk they had not anticipated.", iso: "ISO 42001 A.7.3" },
+  pr2: { concept: "Legal permission for AI training means having a documented, valid legal basis for using specific data to train a specific AI system. This is separate from the legal basis for originally collecting the data, and often requires explicit review by legal or compliance.", whyAsked: "This is the most commonly misunderstood data privacy requirement in AI. The legal basis for 'store customer order data' is not automatically the legal basis for 'train an AI on customer order data.' The purpose has changed, and purpose limitation is a core principle of most privacy law.", example: "A supermarket's legal team reviews consent forms signed by loyalty card members. The forms permit use of data for 'personalised offers and service improvement.' Legal determines this does not cover AI model training and that new consent must be obtained — delaying the AI project by 4 months.", iso: "ISO 42001 A.7.3" },
+  pr3: { concept: "Privacy protection in AI training means ensuring that personal information cannot be extracted from or attributed to individuals based on the AI model or its outputs. Anonymisation removes identity. Pseudonymisation replaces identity with a code. Both reduce — but do not eliminate — re-identification risk.", whyAsked: "AI models can inadvertently memorise personal information from training data and reproduce it in outputs. This is called model inversion or training data extraction. Proper anonymisation before training prevents this and reduces regulatory risk.", example: "Researchers demonstrate that a language model trained on customer service emails can reproduce verbatim fragments of those emails — including names, account numbers, and complaint details — when prompted in certain ways. The model had memorised personal data it was trained on.", iso: "ISO 42001 A.7.3" },
+  b1: { concept: "Representation analysis examines whether the distribution of groups in your training data matches the distribution of groups in the population your AI will affect. Under-representation means the AI has fewer examples to learn from for that group, leading to worse performance.", whyAsked: "AI systems are often tested on average performance across the whole dataset. A model that is 95% accurate overall may be only 70% accurate for a minority group — and that disparity is invisible in aggregate statistics unless you look for it.", example: "A mortgage AI achieves 94% accuracy overall. Broken down by applicant ethnicity, accuracy ranges from 97% for white applicants to 71% for Black applicants. The gap was invisible in overall metrics and only discovered when a fair lending examination required demographic analysis.", iso: "ISO 42001 A.5.4" },
+  b2: { concept: "Historical fairness assessment examines whether the patterns in your training data reflect historical discrimination, bias, or inequity that you would not want your AI to perpetuate. Because AI learns what happened, it will repeat what happened — including what was wrong about what happened.", whyAsked: "This is the hardest bias to see because it is buried in data that looks factually correct. The data accurately records what happened. The problem is that what happened was unfair — and the AI treats past unfairness as objective ground truth.", example: "A recidivism prediction AI is trained on historical re-arrest data. The data accurately reflects that certain groups were historically over-policed and therefore over-arrested. The AI learns to predict higher recidivism for those groups — not because they commit more crime, but because they were more surveilled.", iso: "ISO 42001 A.5.4" },
+  b3: { concept: "Ongoing fairness monitoring means regularly checking whether the AI is producing equitably accurate outcomes across different groups of people after deployment — not just at launch. Fairness can drift over time as populations change and as the AI's outputs influence future data.", whyAsked: "Many organisations conduct a fairness check before launch and consider the issue resolved. But fairness is not a fixed property — it changes as the world changes, as the model's outputs become inputs to other systems, and as edge cases that were rare in training become common in production.", example: "A content moderation AI passes all fairness checks at launch. Over 18 months, the AI's outputs are used to generate training data for the next model version. Small initial biases amplify through this feedback loop until the system is disproportionately moderating certain communities at 3x the rate of others.", iso: "ISO 42001 A.5.4" },
+  g1: { concept: "Access control means ensuring that only authorised individuals can access training data, and that every access event is logged. Training data often contains sensitive information — competitive intelligence, personal data, or proprietary records — and unrestricted access creates privacy, security, and integrity risks.", whyAsked: "Who has access to training data is a fundamental governance question. If anyone in the organisation can read, copy, or modify training datasets without oversight, you have no basis for asserting data integrity, privacy compliance, or security.", example: "An AI training dataset containing confidential client financial data is stored in a shared folder accessible to all 200 employees in the analytics division. During an audit, the organisation cannot demonstrate that the data was accessed only by the 8 people who needed it, creating a GDPR audit finding.", iso: "ISO 42001 A.7.6" },
+  g2: { concept: "Data versioning means maintaining a complete history of changes to training datasets, with each version labelled and preserved. When a model is retrained, you save a snapshot of exactly what data was used, creating a permanent record that links model behaviour to specific data.", whyAsked: "Without versioning, you cannot reproduce a model's behaviour or investigate why a decision was made. If an AI makes a consequential error and you cannot reconstruct the training data that produced it, you cannot diagnose or fix the root cause.", example: "A medical AI diagnostic tool produces an unusual cluster of errors. The team wants to investigate whether a recent data update introduced a problem. Without version control, the original training dataset has been overwritten by the updated version. The investigation cannot proceed and the tool must be taken offline.", iso: "ISO 42001 A.6.2.3" },
+  g3: { concept: "Data retention and deletion policy defines how long different types of data are kept, where they are stored, who can authorise deletion, and how deletion is verified. For AI, this includes training data, validation data, intermediate data products, and data derived from model outputs.", whyAsked: "Keeping data longer than necessary creates both legal risk (GDPR requires data minimisation) and security risk (more data means a larger breach surface). But deleting data too early can make model investigation and audit impossible. A clear policy balances these tensions.", example: "A company receives a GDPR subject access request from a former customer asking for all data held about them. The team discovers that customer records used to train an AI model 3 years ago were never deleted. The customer's personal data is now embedded in a model that has been deployed globally. Remediation requires retraining the model without that customer's data.", iso: "ISO 42001 A.7.6" }
+};
+
+const QUIZ_CATS = ["Do you know your data?","Is your data clean?","Is it fair?","Is it private and legal?","Can you manage it?","Is it enough?"];
+const QUIZ_CAT_COLORS = {"Do you know your data?":"#185FA5","Is your data clean?":"#534AB7","Is it fair?":"#0F6E56","Is it private and legal?":"#993556","Can you manage it?":"#854F0B","Is it enough?":"#993C1D"};
+const QUIZ_TIPS = {
+  "Do you know your data?":"Make a simple spreadsheet listing every dataset — name, source, who owns it, last updated.",
+  "Is your data clean?":"Pick your most important dataset and spend one hour counting blanks, errors, duplicates. Write down what you find.",
+  "Is it fair?":"Ask the hardest question: who is NOT in our data? Gaps are often invisible until you look for them.",
+  "Is it private and legal?":"Loop in legal before using any personal data for AI. One conversation now prevents enormous problems later.",
+  "Can you manage it?":"Assign one named person to own each dataset this week. Even informally, an owner beats no owner every time.",
+  "Is it enough?":"Count your examples per use case. If you have fewer than a few thousand per scenario, think about collecting more before training."
+};
+
+const SCORECARD_CATS = [
+  {id:"know",num:1,title:"Do you know what data you have?",isoRef:"ISO 42001 A.7.2",color:"#185FA5",bg:"#E6F1FB",barColor:"#185FA5",
+   items:[{id:"k1",label:"Data inventory",desc:"A list of all data sources used or planned for AI"},{id:"k2",label:"Data ownership",desc:"Each dataset has a named person responsible for it"},{id:"k3",label:"Where it came from",desc:"We can explain where our data originated and when collected"}],
+   actions:{1:[{s:"Make a spreadsheet listing every dataset — name, source, date, who owns it.",t:"This week",iso:"A.7.2"},{s:"Appoint one person per dataset as 'data owner' — even informally.",t:"Week 1–2",iso:"A.3.2"},{s:"Hold a 1-hour team session to map out where data comes from. Photograph the whiteboard.",t:"Week 2",iso:"A.7.3"}],2:[{s:"Formalise your informal inventory — make it a shared document everyone can access.",t:"Week 1",iso:"A.7.2"},{s:"Add a 'last reviewed' date to every dataset entry.",t:"Week 2",iso:"A.7.4"}],3:[{s:"Review your inventory quarterly. Data changes faster than most people realise.",t:"Ongoing",iso:"A.7.2"},{s:"Add a 'purpose' column — what is each dataset used for?",t:"Week 1",iso:"A.7.2"}],4:[{s:"Run an annual data audit to catch datasets that have drifted from their description.",t:"Annually",iso:"A.7.2"}],5:[{s:"You're in good shape. Share your approach with other teams — this skill is worth spreading.",t:"Ongoing",iso:"A.7.2"}]}},
+  {id:"quality",num:2,title:"Is your data clean and accurate?",isoRef:"ISO 42001 A.7.4",color:"#534AB7",bg:"#EEEDFE",barColor:"#534AB7",
+   items:[{id:"q1",label:"Missing data",desc:"We actively track and fix missing or blank fields"},{id:"q2",label:"Accuracy checks",desc:"We verify data is correct by spot-checking or comparing to another source"},{id:"q3",label:"Fresh and up to date",desc:"We have a process to refresh data regularly"}],
+   actions:{1:[{s:"Pick your most important dataset and count how many blank fields it has.",t:"This week",iso:"A.7.4"},{s:"Set a simple rule: any field used by AI must be at least 95% complete. Write it down.",t:"Week 2",iso:"A.7.4"},{s:"Schedule a monthly 30-minute data health check.",t:"Monthly",iso:"A.7.4"}],2:[{s:"Document what 'good quality' means for each dataset — acceptable error rate, completion threshold.",t:"Week 1",iso:"A.7.4"},{s:"Add a spot-check step — every time data is updated, someone reviews 10 random rows.",t:"Ongoing",iso:"A.7.4"}],3:[{s:"Automate quality checks where possible — spreadsheet formulas or simple scripts can flag issues.",t:"Month 1",iso:"A.7.4"},{s:"Create a simple traffic-light quality dashboard per dataset.",t:"Month 2",iso:"A.7.4"}],4:[{s:"Extend quality monitoring to include data your AI produces, not just what goes in.",t:"Quarter 2",iso:"A.6.2.6"}],5:[{s:"Excellent. Share your quality standards as a template for other teams.",t:"Ongoing",iso:"A.7.4"}]}},
+  {id:"lineage",num:3,title:"Can you trace where your data has been?",isoRef:"ISO 42001 A.7.5",color:"#0F6E56",bg:"#E1F5EE",barColor:"#1D9E75",
+   items:[{id:"l1",label:"Data trail",desc:"We can trace any data back to where it originally came from"},{id:"l2",label:"Change history",desc:"We keep a record of any changes made to data before it reaches AI"},{id:"l3",label:"Transformation log",desc:"We document any cleaning or processing steps applied to data"}],
+   actions:{1:[{s:"Start logging data changes. Even a notes column ('changed X because Y on date Z') is a big step.",t:"This week",iso:"A.7.5"},{s:"Write down in plain English where your main AI dataset came from and what was done to it.",t:"Week 2",iso:"A.7.5"},{s:"Never overwrite original data — always keep a copy of the raw version before any changes.",t:"Immediately",iso:"A.7.5"}],2:[{s:"Formalise your change log — create a standard template so everyone records changes the same way.",t:"Week 1",iso:"A.7.5"},{s:"Store raw and cleaned data separately. Label them clearly.",t:"Week 2",iso:"A.7.5"}],3:[{s:"Map out your data pipeline visually — draw how data flows from source to AI system. One page is enough.",t:"Month 1",iso:"A.7.5"},{s:"Add timestamps to every transformation step.",t:"Month 1",iso:"A.7.5"}],4:[{s:"Look into lightweight data catalog tools to manage lineage at scale.",t:"Quarter 2",iso:"A.7.5"}],5:[{s:"Strong lineage. Make sure it stays current as data sources and processes change.",t:"Ongoing",iso:"A.7.5"}]}},
+  {id:"privacy",num:4,title:"Is your data private and legally sound?",isoRef:"ISO 42001 A.7.3",color:"#993556",bg:"#FBEAF0",barColor:"#993556",
+   items:[{id:"pr1",label:"Personal data check",desc:"We know whether our data contains personal information"},{id:"pr2",label:"Legal permission",desc:"We have clear permission to use this data for AI"},{id:"pr3",label:"Privacy protection",desc:"Personal information is masked or removed before AI training"}],
+   actions:{1:[{s:"Scan your top 3 datasets for names, emails, health info, or financial details. Flag them now.",t:"This week",iso:"A.7.3"},{s:"Get legal advice before using personal data for AI. This is not optional.",t:"Immediately",iso:"A.7.3"},{s:"Ask your legal team: 'Do we have permission to use this data to train AI?' Get it in writing.",t:"Week 1",iso:"A.7.3"}],2:[{s:"Create a checklist: before any dataset is used for AI, confirm legal basis, PII identified, PII handled.",t:"Week 1",iso:"A.7.3"},{s:"Map which datasets contain personal data and assign privacy responsibility for each.",t:"Week 2",iso:"A.7.3"}],3:[{s:"Work with IT to implement anonymisation or pseudonymisation on personal data before it reaches AI.",t:"Month 1",iso:"A.7.3"},{s:"Conduct a Data Protection Impact Assessment for any AI system that processes personal data at scale.",t:"Month 2",iso:"A.7.3"}],4:[{s:"Run an annual review of all AI data permissions — regulations change, and what was compliant may not be.",t:"Annually",iso:"A.7.3"}],5:[{s:"Privacy well handled. Ensure documentation is audit-ready — a regulator could ask tomorrow.",t:"Ongoing",iso:"A.7.3"}]}},
+  {id:"bias",num:5,title:"Is your data fair and representative?",isoRef:"ISO 42001 A.5.4",color:"#993C1D",bg:"#FAECE7",barColor:"#993C1D",
+   items:[{id:"b1",label:"Who is in the data",desc:"We've checked whether data represents all people our AI will affect"},{id:"b2",label:"Historical fairness",desc:"We're aware of past unfairness that might be baked into our data"},{id:"b3",label:"Ongoing fairness checks",desc:"We monitor whether our AI treats different groups fairly once running"}],
+   actions:{1:[{s:"Ask one simple question of your data: who is NOT here? Gaps in representation are often invisible.",t:"This week",iso:"A.5.4"},{s:"List all groups of people your AI affects. Does your data cover all of them?",t:"Week 1",iso:"A.5.4"},{s:"Get diverse voices in the room when reviewing AI data. Affected groups spot blind spots fast.",t:"Week 2",iso:"A.5.4"}],2:[{s:"Document what you know — and don't know — about representation gaps. Write it as a known limitation.",t:"Week 1",iso:"A.5.4"},{s:"Look at your data by key demographic groups (where appropriate and legal) and compare sizes.",t:"Week 2",iso:"A.5.4"}],3:[{s:"Review data for historical bias with HR, legal, or a fairness expert.",t:"Month 1",iso:"A.5.4"},{s:"Define what fairness means for your specific use case before the AI is built.",t:"Month 1",iso:"A.5.4"}],4:[{s:"Set up quarterly fairness monitoring — check AI outcomes across different groups, document results.",t:"Quarterly",iso:"A.5.4"},{s:"Create a way for people to flag if they think the AI is treating them unfairly.",t:"Month 2",iso:"A.3.3"}],5:[{s:"Excellent fairness posture. Document your approach so it can be evidenced in an audit.",t:"Ongoing",iso:"A.5.4"}]}},
+  {id:"govern",num:6,title:"Is your data well governed?",isoRef:"ISO 42001 A.7.6",color:"#854F0B",bg:"#FAEEDA",barColor:"#854F0B",
+   items:[{id:"g1",label:"Access control",desc:"Only the right people can access sensitive data — and we track who has"},{id:"g2",label:"Data versioning",desc:"When data changes, we track what version was used to train the AI"},{id:"g3",label:"Retention and deletion",desc:"We have a clear policy for how long we keep data and when we delete it"}],
+   actions:{1:[{s:"Review who currently has access to AI training data. Limit it to people who genuinely need it.",t:"This week",iso:"A.7.6"},{s:"Start saving versioned copies of training datasets before each AI run. Label with a date.",t:"Week 1",iso:"A.7.6"},{s:"Write a simple retention rule: how long do we keep each data type, and who approves deletion?",t:"Week 2",iso:"A.7.6"}],2:[{s:"Implement a simple access log — who accessed which data and when.",t:"Week 1",iso:"A.6.2.8"},{s:"Formalise versioning with a naming convention: dataset_v1, dataset_v2.",t:"Week 2",iso:"A.7.6"}],3:[{s:"Implement role-based access — data scientists get full access, business users read-only.",t:"Month 1",iso:"A.7.6"},{s:"Automate retention — set expiry dates on datasets and flag for review.",t:"Month 2",iso:"A.7.6"}],4:[{s:"Conduct an access review quarterly — people change roles and permissions drift.",t:"Quarterly",iso:"A.7.6"},{s:"Link data versioning to model versioning so you always know which data trained which model.",t:"Quarter 2",iso:"A.6.2.3"}],5:[{s:"Governance is solid. Ensure your audit trail is complete enough for an external auditor.",t:"Ongoing",iso:"A.6.2.8"}]}}
+];
+
+const PLAN_DATA = [
+  {phase:"Week 1–2: Quick wins",phaseColor:"#E24B4A",phaseBg:"#FCEBEB",items:[
+    {title:"Hold a data mapping session",desc:"Get key people in a room. Ask: what data do we use? Where does it come from? Who is responsible? Photograph the whiteboard. That photograph is your starting point.",time:"Day 1–3",iso:"A.7.2"},
+    {title:"Build your data inventory",desc:"Turn the whiteboard into a shared spreadsheet. Five columns: dataset name, what it's used for, where it came from, who owns it, when last updated. Imperfect is fine — it just needs to exist.",time:"Day 3–7",iso:"A.7.2"},
+    {title:"Assign a data owner to every dataset",desc:"One named person per dataset. Not a team — one individual. Data without an owner is nobody's problem until it becomes a crisis.",time:"Day 5–10",iso:"A.3.2"},
+    {title:"Do a quick dirty data check",desc:"Take your most important dataset and spend an hour looking at it in Excel. How many blank fields? Obvious errors? Duplicates? Write down what you find — that document is your first quality finding.",time:"Day 10–14",iso:"A.7.4"},
+    {title:"Flag personal data immediately",desc:"Scan your top 3 datasets. Does any contain names, emails, health info, or financial details? If yes, flag to legal now. Do not use personal data for AI without legal confirmation.",time:"Day 5–10",iso:"A.7.3"}
+  ]},
+  {phase:"Month 1: Foundations",phaseColor:"#EF9F27",phaseBg:"#FAEEDA",items:[
+    {title:"Set your data quality standards",desc:"For each dataset, write down what 'good' looks like. Example: no more than 5% blank fields, no duplicate records, dates in the same format. These are your standards — they just need to exist and be written down.",time:"Week 3–4",iso:"A.7.4"},
+    {title:"Write your first data quality gap report",desc:"Check whether your data meets your new standards. Log the gaps. You don't have to fix everything now — you have to know what's broken.",time:"Week 4",iso:"A.7.4"},
+    {title:"Get legal sign-off in writing",desc:"Work with your legal team to confirm you have the right to use your data for AI. Get the answer in an email. File it with your inventory. This is your legal basis documentation.",time:"Week 3–5",iso:"A.7.3"},
+    {title:"Write your data story — one page per dataset",desc:"In plain English: where did this data come from, who collected it, has it been changed, what version is being used. This answers the auditor's first question.",time:"Week 4–6",iso:"A.7.5"},
+    {title:"Start the fairness conversation",desc:"Hold a session asking: who are all the people our AI will affect? Are they all in our data? Are there groups who might be missing? Document what you know and don't know.",time:"Week 5–6",iso:"A.5.4"}
+  ]},
+  {phase:"Month 2–3: Build-out",phaseColor:"#1D9E75",phaseBg:"#E1F5EE",items:[
+    {title:"Fix data quality issues in priority order",desc:"Start with datasets closest to AI deployment. Assign each fix to the data owner. Set a deadline. Note the date and what was changed — this is your quality improvement log.",time:"Month 2, Week 1–2",iso:"A.7.4"},
+    {title:"Set up a monthly data health check",desc:"Schedule a recurring 30-minute meeting. Data owners report on dataset health using a traffic light: green = meets standards, amber = known issues being fixed, red = problems affecting AI reliability.",time:"Month 2, Week 2",iso:"A.7.4"},
+    {title:"Lock down data access",desc:"Work with IT to restrict access to AI training data. Implement an access log. No single person should be able to change data without a second person reviewing it.",time:"Month 2, Week 3–4",iso:"A.7.6"},
+    {title:"Version your data",desc:"Before every AI training run, save a labelled copy — 'customer-data-v3-may-2026'. Store it somewhere it won't be overwritten. This lets you trace any AI decision back to the exact data the model learned from.",time:"Month 3",iso:"A.6.2.3"},
+    {title:"Run your first internal data audit",desc:"Go through your inventory, quality standards, lineage docs, legal sign-offs, and access logs. For each: does this exist, is it current, could I show it to an auditor tomorrow? What's a no becomes your next quarter's priorities.",time:"Month 3",iso:"A.7.2"}
+  ]}
+];
+
+// ═══════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════
+function switchView(id, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-'+id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ═══════════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════════
+const qAnswers = {};
+
+function buildQuiz() {
+  const el = document.getElementById('quiz-questions');
+  let lastCat = null;
+  QUIZ_QS.forEach((q,i) => {
+    if (q.cat !== lastCat) {
+      const tag = document.createElement('div');
+      tag.style.cssText = `display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:3px 10px;border-radius:10px;background:${q.catBg};color:${q.catColor};margin:8px 0 6px`;
+      tag.textContent = q.cat;
+      el.appendChild(tag);
+      lastCat = q.cat;
+    }
+    const h = QUIZ_HELP[q.id] || {};
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.innerHTML = `<div class="q-num">Question ${i+1} of 12
+      <button class="help-btn" onclick="toggleHelp('qh-${q.id}')" title="Why is this asked?">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Why is this asked?
+      </button>
+    </div>
+    <div class="help-drawer" id="qh-${q.id}">
+      <div class="help-drawer-title">Why we ask this</div>
+      <div class="help-section"><div class="help-section-lbl">The concept</div><div class="help-section-text">${h.concept||''}</div></div>
+      <div class="help-section"><div class="help-section-lbl">Why auditors care</div><div class="help-section-text">${h.whyAsked||''}</div></div>
+      <div class="help-example">${h.example||''}</div>
+      <div><span class="help-iso">${h.iso||''}</span></div>
+    </div>
+      <div class="q-text">${q.text}</div>
+      <div class="q-why">${q.why}</div>
+      <div class="ans-grid">${q.answers.map(a=>`<button class="ans-btn" onclick="selectQuizAns('${q.id}',${a.s},this,'${q.cat}')">${a.t}</button>`).join('')}</div>`;
+    el.appendChild(card);
+  });
+}
+
+function selectQuizAns(qid, score, btn, cat) {
+  qAnswers[qid] = {score, cat};
+  btn.closest('.ans-grid').querySelectorAll('.ans-btn').forEach(b => b.className='ans-btn');
+  btn.className = `ans-btn sel${score}`;
+  const n = Object.keys(qAnswers).length;
+  document.getElementById('q-prog').style.width = Math.round(n/12*100)+'%';
+  document.getElementById('q-prog-label').textContent = `${n} of 12`;
+  if (n === 12) setTimeout(showQuizResult, 400);
+}
+
+function showQuizResult() {
+  const total = Object.values(qAnswers).reduce((s,v)=>s+v.score,0);
+  const pct = Math.round(total/36*100);
+  const catScores = {};
+  QUIZ_CATS.forEach(c => { catScores[c] = 0; let count = 0; Object.values(qAnswers).forEach(v=>{ if(v.cat===c){catScores[c]+=v.score;count++;}});
+    catScores[c] = count ? Math.round((catScores[c]/(count*3))*100) : 0; });
+  const tiers = [
+    {min:85,emoji:"🟢",title:`AI-ready — you're in good shape (${pct}%)`,sub:"Your data foundation is solid. You've done the hard work most organisations skip. Move forward confidently — keep monitoring quality as your systems evolve.",bg:"#E1F5EE",border:"#1D9E75",textColor:"#085041"},
+    {min:65,emoji:"🟡",title:`Getting there — a few gaps to close (${pct}%)`,sub:"You have a decent foundation but specific areas need attention before AI deployment. The gaps are identifiable and fixable with a focused effort over 60–90 days.",bg:"#FAEEDA",border:"#EF9F27",textColor:"#412402"},
+    {min:40,emoji:"🟠",title:`Not quite ready — meaningful work ahead (${pct}%)`,sub:"There are real data readiness gaps that would likely cause problems if you deployed AI today. Fixable — but it requires a structured programme, not a quick patch.",bg:"#FAECE7",border:"#D85A30",textColor:"#4A1B0C"},
+    {min:0,emoji:"🔴",title:`Not ready — start with the foundation (${pct}%)`,sub:"Your data isn't ready for AI yet, and that's okay — most organisations are honest about this when they look closely. Starting with foundation work now saves enormous pain later.",bg:"#FCEBEB",border:"#E24B4A",textColor:"#501313"}
+  ];
+  const tier = tiers.find(t=>pct>=t.min);
+  const res = document.getElementById('quiz-result');
+  res.style.cssText = `display:block;background:${tier.bg};border:1px solid ${tier.border};border-radius:16px;padding:28px;margin-top:20px;color:${tier.textColor}`;
+  document.getElementById('qr-emoji').textContent = tier.emoji;
+  document.getElementById('qr-title').textContent = tier.title;
+  document.getElementById('qr-sub').textContent = tier.sub;
+  const bars = document.getElementById('qr-bars');
+  bars.innerHTML = `<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;opacity:0.6;margin-bottom:10px">Score by area</div>` +
+    QUIZ_CATS.map(cat => {
+      const p = catScores[cat];
+      const col = p>=70?"#1D9E75":p>=45?"#EF9F27":"#E24B4A";
+      return `<div class="qr-bar-row"><span class="qr-bar-lbl" style="color:${tier.textColor}">${cat}</span><div class="qr-bar-track"><div class="qr-bar-fill" style="width:${p}%;background:${col}"></div></div><span class="qr-bar-pct" style="color:${tier.textColor}">${p}%</span></div>`;
+    }).join('');
+  const weakCats = QUIZ_CATS.filter(c=>catScores[c]<50).sort((a,b)=>catScores[a]-catScores[b]);
+  const tips = document.getElementById('qr-tips');
+  if (weakCats.length) {
+    tips.innerHTML = `<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;opacity:0.6;margin:12px 0 8px">Your top priorities</div>` +
+      weakCats.slice(0,3).map(c=>`<div class="qr-tip"><div class="qr-tip-text"><strong>${c}:</strong> ${QUIZ_TIPS[c]}</div></div>`).join('');
+  }
+  res.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function resetQuiz() {
+  Object.keys(qAnswers).forEach(k=>delete qAnswers[k]);
+  document.querySelectorAll('.ans-btn').forEach(b=>b.className='ans-btn');
+  document.getElementById('quiz-result').style.display='none';
+  document.getElementById('q-prog').style.width='0%';
+  document.getElementById('q-prog-label').textContent='0 of 12';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════════
+// SCORECARD
+// ═══════════════════════════════════════════
+const scScores = {};
+
+function buildScorecard() {
+  const el = document.getElementById('sc-blocks');
+  SCORECARD_CATS.forEach(cat => {
+    const block = document.createElement('div'); block.className='card'; block.style.marginBottom='10px';
+    const hdr = document.createElement('div'); hdr.className='card-header'; hdr.style.background=cat.bg;
+    hdr.innerHTML=`<div class="cat-circle" style="background:${cat.color}">${cat.num}</div><div class="cat-info"><div class="cat-name" style="color:${cat.color}">${cat.title}</div><div class="cat-iso">${cat.isoRef}</div></div><div class="cat-avg" id="sc-cat-avg-${cat.id}" style="color:${cat.color}"></div>`;
+    block.appendChild(hdr);
+    cat.items.forEach(item => {
+      const h = SC_HELP[item.id] || {};
+      const row = document.createElement('div'); row.className='score-row'; row.dataset.item=item.id;
+      row.innerHTML=`<div><div class="score-label">${item.label}
+        <button class="help-btn" onclick="toggleHelp('sch-${item.id}')" title="Learn more">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Why this matters
+        </button>
+      </div><div class="score-desc">${item.desc}</div></div><div class="rating-btns">${[1,2,3,4,5].map(v=>`<button class="r-btn" onclick="scRate('${item.id}','${cat.id}',${v},this)">${v}</button>`).join('')}</div>`;
+      block.appendChild(row);
+      const helpDrawer = document.createElement('div');
+      helpDrawer.className='sc-help-drawer'; helpDrawer.id='sch-'+item.id;
+      helpDrawer.innerHTML=`<div class="help-drawer-title">Why this matters</div>
+        <div class="help-section"><div class="help-section-lbl">The concept</div><div class="help-section-text">${h.concept||''}</div></div>
+        <div class="help-section"><div class="help-section-lbl">Why auditors ask about this</div><div class="help-section-text">${h.whyAsked||''}</div></div>
+        <div class="help-example">${h.example||''}</div>
+        <span class="help-iso">${h.iso||''}</span>`;
+      block.appendChild(helpDrawer);
+    });
+    const panel = document.createElement('div'); panel.className='action-panel'; panel.id='sc-actions-'+cat.id;
+    panel.innerHTML=`<div class="action-panel-title">Action steps for this area</div><div id="sc-steps-${cat.id}"></div>`;
+    block.appendChild(panel);
+    el.appendChild(block);
+  });
+}
+
+function scRate(itemId, catId, val, btn) {
+  scScores[itemId] = val;
+  btn.closest('.rating-btns').querySelectorAll('.r-btn').forEach(b=>b.className='r-btn');
+  btn.className=`r-btn s${val}`;
+  updateScCatAvg(catId);
+  showScActions(catId);
+  updateScSummary();
+}
+
+function getCatAvg(cat) {
+  const vals = cat.items.map(i=>scScores[i.id]).filter(v=>v!==undefined);
+  return vals.length ? vals.reduce((s,v)=>s+v,0)/vals.length : null;
+}
+
+function updateScCatAvg(catId) {
+  const cat = SCORECARD_CATS.find(c=>c.id===catId);
+  const avg = getCatAvg(cat);
+  const el = document.getElementById('sc-cat-avg-'+catId);
+  if (el) el.textContent = avg!==null ? avg.toFixed(1)+'/5' : '';
+}
+
+function showScActions(catId) {
+  const cat = SCORECARD_CATS.find(c=>c.id===catId);
+  const avg = getCatAvg(cat);
+  if (avg===null) return;
+  const tier = avg<1.5?1:avg<2.5?2:avg<3.5?3:avg<4.5?4:5;
+  const steps = cat.actions[tier];
+  const cols = ["","#E24B4A","#EF9F27","#BA7517","#639922","#1D9E75"];
+  document.getElementById('sc-steps-'+catId).innerHTML = steps.map((s,i)=>`
+    <div class="action-step">
+      <div class="step-num" style="background:${cols[tier]}">${i+1}</div>
+      <div class="step-body"><div class="step-text">${s.s}</div><div class="step-meta"><span class="iso-chip">${s.iso}</span><span class="step-time">${s.t}</span></div></div>
+    </div>`).join('');
+  document.getElementById('sc-actions-'+catId).classList.add('open');
+}
+
+function maturityLabel(avg) {
+  return avg<1.5?"Not ready":avg<2.5?"Ad hoc":avg<3.5?"Developing":avg<4.5?"Managed":"Optimised";
+}
+
+function updateScSummary() {
+  const allIds = SCORECARD_CATS.flatMap(c=>c.items.map(i=>i.id));
+  const scored = allIds.filter(id=>scScores[id]!==undefined);
+  document.getElementById('sc-scored').textContent=`${scored.length}/18`;
+  const name = document.getElementById('sc-name').value;
+  document.getElementById('sc-name-display').textContent = name ? `for ${name}` : '';
+  if (!scored.length) return;
+  const avg = scored.reduce((s,id)=>s+scScores[id],0)/scored.length;
+  document.getElementById('sc-overall').textContent=avg.toFixed(1)+'/5';
+  document.getElementById('sc-maturity').textContent=maturityLabel(avg);
+  const barsEl = document.getElementById('sc-bars');
+  barsEl.innerHTML = SCORECARD_CATS.map(cat=>{
+    const a = getCatAvg(cat);
+    const pct = a!==null?Math.round(a/5*100):0;
+    return `<div class="bar-row"><span class="bar-lbl">${cat.title.replace(/^(Is your |Is it |Can you |Do you )/,'')}</span><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${cat.barColor}"></div></div><span class="bar-num">${a!==null?a.toFixed(1):'—'}</span></div>`;
+  }).join('');
+  const weak = SCORECARD_CATS.map(c=>({cat:c,avg:getCatAvg(c)})).filter(x=>x.avg!==null&&x.avg<3).sort((a,b)=>a.avg-b.avg);
+  const priEl = document.getElementById('sc-priorities');
+  if (!weak.length){priEl.innerHTML='<div style="font-size:12px;color:var(--mid-gray)">No critical gaps — all areas scoring 3 or above</div>';return;}
+  priEl.innerHTML=weak.map(x=>{
+    const t=x.avg<1.5?1:x.avg<2.5?2:3;
+    const bc=t===1?{bg:"#FCEBEB",c:"#791F1F",txt:"Critical"}:t===2?{bg:"#FAEEDA",c:"#633806",txt:"High"}:{bg:"#FAC775",c:"#412402",txt:"Medium"};
+    const firstStep=x.cat.actions[t][0];
+    return `<div class="priority-item"><span class="p-badge" style="background:${bc.bg};color:${bc.c}">${bc.txt}</span><div><div class="p-text">${x.cat.title}</div><div class="p-sub">Next: ${firstStep.s.substring(0,85)}...</div></div></div>`;
+  }).join('');
+}
+
+function resetScorecard() {
+  Object.keys(scScores).forEach(k=>delete scScores[k]);
+  document.querySelectorAll('.r-btn').forEach(b=>b.className='r-btn');
+  document.querySelectorAll('.action-panel').forEach(p=>p.classList.remove('open'));
+  ['sc-overall','sc-scored','sc-maturity'].forEach(id=>document.getElementById(id).textContent=id==='sc-scored'?'0/18':'—');
+  document.getElementById('sc-bars').innerHTML='';
+  document.getElementById('sc-priorities').innerHTML='<div style="font-size:12px;color:var(--mid-gray)">Rate items above to see your priorities</div>';
+  SCORECARD_CATS.forEach(c=>{const el=document.getElementById('sc-cat-avg-'+c.id);if(el)el.textContent='';});
+}
+
+function buildPlan() {
+  const name = document.getElementById('sc-name').value || 'your team';
+  const scores = SCORECARD_CATS.map(c=>`${c.title}: ${(getCatAvg(c)||0).toFixed(1)}/5`).join('; ');
+  document.getElementById('plan-intro-text').textContent=`Built from your scorecard scores for ${name}. Phases are ordered by urgency — start at the top.`;
+  switchView('plan', document.querySelectorAll('.nav-tab')[3]);
+  renderPlan();
+}
+
+// ═══════════════════════════════════════════
+// PLAN
+// ═══════════════════════════════════════════
+function renderPlan() {
+  const el = document.getElementById('plan-content');
+  if (el.children.length) return;
+  PLAN_DATA.forEach(phase => {
+    const sec = document.createElement('div'); sec.className='plan-section';
+    sec.innerHTML=`<div class="plan-phase"><span class="phase-badge" style="background:${phase.phaseBg};color:${phase.phaseColor}">${phase.phase}</span><div class="phase-line"></div></div>` +
+      phase.items.map((item,i)=>`<div class="plan-item"><div class="plan-num">${i+1}</div><div class="plan-content"><div class="plan-title">${item.title}</div><div class="plan-desc">${item.desc}</div><div class="plan-meta"><span class="plan-iso">${item.iso}</span><span class="plan-time">${item.time}</span></div></div></div>`).join('');
+    el.appendChild(sec);
+  });
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+
+function toggleHelp(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('open');
+}
+
+buildQuiz();
+buildScorecard();
+renderPlan();
+</script>
+
+<footer style="background:#0D1B3E;padding:24px 32px;margin-top:40px;font-family:'DM Sans',sans-serif">
+  <div style="max-width:860px;margin:0 auto">
+    <div style="font-size:11px;color:#8A9BB0;line-height:1.7;margin-bottom:8px">
+      <strong style="color:#E8A820">Disclaimer:</strong> This tool is for educational and informational purposes only. It is not a formal audit, legal assessment, or compliance certification. Results are general guidance loosely inspired by ISO/IEC 42001:2023 principles and do not constitute professional legal, compliance, or data governance advice. Always consult qualified professionals before making significant AI or data governance decisions. The creator accepts no liability for decisions made based on this tool's output. No affiliation with ISO or any standards body.
+    </div>
+    <div style="font-size:10px;color:#5A6A7A">© 2026 <strong style="color:#E8A820">Jeff Laber</strong> &nbsp;|&nbsp; Helping enterprises get AI-ready &nbsp;|&nbsp; Educational use only &nbsp;|&nbsp; Not professional advice &nbsp;|&nbsp; <a href="https://www.linkedin.com/in/jeff-laber-866a2618" target="_blank" style="color:#0A7EA4;text-decoration:none">LinkedIn</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
